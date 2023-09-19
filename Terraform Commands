@@ -1,0 +1,16 @@
+###Terraform controls everything wth .tfstate(don't change this file, don't send this file to repository)
+
+###Inicialize project
+#terraform init
+
+###Check if everything is ok before deploy
+#terraform plan
+
+###Deploy 
+#terraforn apply
+
+###Console terraform for various indexes
+#terraform console
+
+###Apply change only to user name change
+#terraform apply -target="aws_iam_user.my_iam_user"
