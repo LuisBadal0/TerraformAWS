@@ -1,0 +1,2 @@
+###Get Images aws_linux_2023_latest
+# aws ec2 describe-images --region eu-west-2 --image-ids ami-0b25f6ba2f4419235
