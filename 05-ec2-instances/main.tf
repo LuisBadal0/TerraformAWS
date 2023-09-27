@@ -8,13 +8,22 @@ terraform {
 
 }
 
+variable "region" {
+  default = "eu-west-2"
+
+}
+variable "instance_type" {
+  default = "t2.micro"
+
+}
+
 variable "aws_key_pair" {
   default = "~/aws/aws_keys/default-ec2.pem"
 }
 
 # Configure the AWS Provider
 provider "aws" {
-  region = "eu-west-2"
+  region = var.region
   # VERSION IS NOT NEEDED HERE
   #Put access to the provider via environment variable instead of hardcoded -> https://registry.terraform.io/providers/hashicorp/aws/latest/docs 
 }
@@ -27,9 +36,19 @@ resource "aws_default_vpc" "default" {
 
 data "aws_subnets" "default_subnets" {
   filter {
-    name = "vpc-id"
+    name   = "vpc-id"
     values = [aws_default_vpc.default.id]
   }
+}
+
+data "aws_ami" "aws_linux_2023_latest" {
+  most_recent = true
+  owners      = ["amazon"]
+  filter {
+    name   = "name"
+    values = ["al2023-ami-2023.*"]
+  }
+
 }
 
 
@@ -38,7 +57,7 @@ data "aws_subnets" "default_subnets" {
 //Security Group
 
 resource "aws_security_group" "http_server_sg" {
-  name   = "http_server_sg"
+  name = "http_server_sg"
   //vpc_id = "vpc-0cc097fd81330d115"
   vpc_id = aws_default_vpc.default.id
   ingress {
@@ -69,9 +88,9 @@ resource "aws_security_group" "http_server_sg" {
 }
 
 resource "aws_instance" "http_server" {
-  ami                    = "ami-0b25f6ba2f4419235"
+  ami                    = data.aws_ami.aws_linux_2023_latest.id
   key_name               = "default-ec2"
-  instance_type          = "t2.micro"
+  instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
   subnet_id              = data.aws_subnets.default_subnets.ids[0]
 
