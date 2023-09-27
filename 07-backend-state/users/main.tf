@@ -5,7 +5,7 @@ terraform {
       version = "~> 3.0"
     }
   }
-  
+
 }
 
 # Configure the AWS Provider
@@ -19,6 +19,6 @@ provider "aws" {
 
 
 resource "aws_iam_user" "my_iam_user" {
-    name = "my_iam_user_abc"
+  name = "my_iam_user_abc"
 }
 
