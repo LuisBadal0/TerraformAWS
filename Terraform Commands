@@ -38,3 +38,6 @@
 
 ###Get vars from certain file
 #terraform apply -var-file="some-name.tfvars"
+
+###Get subnets from aws to project
+#terraform apply --target data.aws_subnets.default_subnets
