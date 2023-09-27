@@ -32,3 +32,9 @@
 
 ###Specific resouce updated
 #terraform plan -target=name.tf
+
+###Apply environment variable name
+#Set-item -Path env:TF_VAR_iam_user_name_prefix -Value 'FROM_ENV_VARIABLE_IAM_PREFIX'
+
+###Get vars from certain file
+#terraform apply -var-file="some-name.tfvars"
