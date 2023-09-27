@@ -14,3 +14,21 @@
 
 ###Apply change only to user name change
 #terraform apply -target="aws_iam_user.my_iam_user"
+
+###Validade context
+#terraform Validade
+
+###Format document
+#terraform fmt
+
+###Shows states in tfstate
+#terraform show
+
+###Plan terraform command to a file
+#terraform plan -o iam.tfplan
+
+###Apply plan
+#terraform apply iam.tfplan
+
+###Specific resouce updated
+#terraform plan -target=name.tf
