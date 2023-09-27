@@ -26,7 +26,7 @@ resource "aws_default_vpc" "default" {
 //Security Group
 
 resource "aws_security_group" "http_server_sg" {
-  name = "http_server_sg"
+  name   = "http_server_sg"
   vpc_id = aws_default_vpc.default.id
   ingress {
     from_port   = 80
@@ -54,9 +54,9 @@ resource "aws_security_group" "http_server_sg" {
   }
 
 }
-
+//Load Balancer
 resource "aws_security_group" "elb_sg" {
-  name = "elb_sg"
+  name   = "elb_sg"
   vpc_id = aws_default_vpc.default.id
 
   ingress {
@@ -76,19 +76,19 @@ resource "aws_security_group" "elb_sg" {
 }
 
 resource "aws_elb" "elb" {
-  name = "elb"
-  subnets = data.aws_subnets.default_subnets.ids
+  name            = "elb"
+  subnets         = data.aws_subnets.default_subnets.ids
   security_groups = [aws_security_group.elb_sg.id]
-  instances = values(aws_instance.http_servers).*.id
+  instances       = values(aws_instance.http_servers).*.id
 
   listener {
-    instance_port = 80
+    instance_port     = 80
     instance_protocol = "http"
-    lb_port = 80
-    lb_protocol = "http"
+    lb_port           = 80
+    lb_protocol       = "http"
   }
 
-  }
+}
 
 resource "aws_instance" "http_servers" {
   ami                    = data.aws_ami.aws_linux_2023_latest.id
@@ -100,7 +100,7 @@ resource "aws_instance" "http_servers" {
   subnet_id = each.value
 
   tags = {
-    name: "http_servers_${each.value}"
+    name : "http_servers_${each.value}"
   }
 
   connection {
