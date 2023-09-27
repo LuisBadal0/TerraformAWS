@@ -25,6 +25,14 @@ resource "aws_default_vpc" "default" {
   }
 }
 
+data "aws_subnets" "default_subnets" {
+  filter {
+    name = "vpc-id"
+    values = [aws_default_vpc.default.id]
+  }
+}
+
+
 //http Server -> 80 TCP, 22 TCP, CIDR ["0.0.0.0/0"]
 
 //Security Group
@@ -65,7 +73,7 @@ resource "aws_instance" "http_server" {
   key_name               = "default-ec2"
   instance_type          = "t2.micro"
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
-  subnet_id              = "subnet-0ab30df0d626c6175"
+  subnet_id              = data.aws_subnets.default_subnets.ids[0]
 
   connection {
     type        = "ssh"
