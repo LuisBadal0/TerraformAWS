@@ -9,7 +9,7 @@ terraform {
 }
 
 variable "names" {
-  default = ["Ana", "Luis", "Jose"]
+  default = ["Rafael", "Luis", "Jose"]
 }
 # Configure the AWS Provider
 provider "aws" {
@@ -20,7 +20,9 @@ provider "aws" {
 
 ##Create multiple users
 resource "aws_iam_user" "my_iam_users" {
-  count = length(var.names)
-  name  = var.names[count.index]
+  # count = length(var.names)
+  # name  = var.names[count.index]
+  for_each = toset(var.names)
+  name = each.value
 }
 
