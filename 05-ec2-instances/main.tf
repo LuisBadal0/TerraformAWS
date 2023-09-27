@@ -8,19 +8,6 @@ terraform {
 
 }
 
-variable "region" {
-  default = "eu-west-2"
-
-}
-variable "instance_type" {
-  default = "t2.micro"
-
-}
-
-variable "aws_key_pair" {
-  default = "~/aws/aws_keys/default-ec2.pem"
-}
-
 # Configure the AWS Provider
 provider "aws" {
   region = var.region
@@ -33,24 +20,6 @@ resource "aws_default_vpc" "default" {
     Name = "Default VPC"
   }
 }
-
-data "aws_subnets" "default_subnets" {
-  filter {
-    name   = "vpc-id"
-    values = [aws_default_vpc.default.id]
-  }
-}
-
-data "aws_ami" "aws_linux_2023_latest" {
-  most_recent = true
-  owners      = ["amazon"]
-  filter {
-    name   = "name"
-    values = ["al2023-ami-2023.*"]
-  }
-
-}
-
 
 //http Server -> 80 TCP, 22 TCP, CIDR ["0.0.0.0/0"]
 
