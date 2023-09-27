@@ -19,14 +19,20 @@ provider "aws" {
   #Put access to the provider via environment variable instead of hardcoded -> https://registry.terraform.io/providers/hashicorp/aws/latest/docs 
 }
 
+resource "aws_default_vpc" "default" {
+  tags = {
+    Name = "Default VPC"
+  }
+}
+
 //http Server -> 80 TCP, 22 TCP, CIDR ["0.0.0.0/0"]
 
 //Security Group
 
 resource "aws_security_group" "http_server_sg" {
   name   = "http_server_sg"
-  vpc_id = "vpc-0cc097fd81330d115"
-
+  //vpc_id = "vpc-0cc097fd81330d115"
+  vpc_id = aws_default_vpc.default.id
   ingress {
     from_port   = 80
     to_port     = 80
