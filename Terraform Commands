@@ -41,3 +41,9 @@
 
 ###Get subnets from aws to project
 #terraform apply --target data.aws_subnets.default_subnets
+
+###Select workspace
+#terraform workspace select {name workspace}
+
+###Show workspace
+#terraform workspace show
