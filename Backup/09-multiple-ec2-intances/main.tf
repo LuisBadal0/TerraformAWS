@@ -58,7 +58,7 @@ resource "aws_security_group" "http_server_sg" {
 
 resource "aws_instance" "http_server" {
   ami                    = data.aws_ami.aws_linux_2023_latest.id
-  count                  = 2
+  count                  = 3
   key_name               = "default-ec2"
   instance_type          = var.instance_type
   vpc_security_group_ids = [aws_security_group.http_server_sg.id]
